@@ -1,0 +1,17 @@
+ <footer class="footer -dashboard mt-60">
+     <div class="footer__row row y-gap-10 items-center justify-between">
+         <div class="col-auto">
+             <div class="row y-gap-20 items-center">
+                 <div class="col-auto">
+                     <div class="text-14 lh-14 mr-30">Copyright © {{ date('Y') }}
+                         {{ \App\Helpers\Helper::getfooterText() }}</div>
+                 </div>
+             </div>
+         </div>
+         <div class="col-auto">
+             <div class="d-flex x-gap-5 y-gap-5 items-center">
+                 <img src="{{ asset('assets/img/avatars/card.png') }}" alt="img">
+             </div>
+         </div>
+     </div>
+ </footer>
