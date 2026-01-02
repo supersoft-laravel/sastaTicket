@@ -11,6 +11,15 @@ use Carbon\Carbon;
 
 class Helper
 {
+    public static function statusClass(string $status): string
+    {
+        return match ($status) {
+            'confirmed' => 'bg-green-1 text-green-4',
+            'pending'   => 'bg-yellow-4 text-yellow-3',
+            'cancelled' => 'bg-red-3 text-red-2',
+            default     => 'bg-light-2 text-dark-1',
+        };
+    }
     public static function formatDurations($duration)
     {
         preg_match('/PT(\d+H)?(\d+M)?/', $duration, $matches);

@@ -42,6 +42,11 @@ class UserRolePermissionSeeder extends Seeder
         Permission::create(['name' => 'update setting']);
         Permission::create(['name' => 'delete setting']);
 
+        Permission::create(['name' => 'view flight booking']);
+        Permission::create(['name' => 'create flight booking']);
+        Permission::create(['name' => 'update flight booking']);
+        Permission::create(['name' => 'delete flight booking']);
+
 
         // Create Roles
         $superAdminRole = Role::create(['name' => 'super-admin']); //as super-admin

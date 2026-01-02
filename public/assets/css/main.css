@@ -4469,7 +4469,7 @@ h6 {
     z-index: 100;
     width: var(--dashboard-width);
     height: calc(100% - 90px);
-    padding: 60px 30px 40px;
+    padding: 20px 30px 40px;
     will-change: transform;
     transition: all .5s cubic-bezier(.215, .61, .355, 1);
     box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.03);
@@ -13073,7 +13073,7 @@ box-shadow: 3px 6px 16px rgba(0, 0, 0, 0.08);
 
 }
 .custom_setting_area_list ul li{
-    
+
 }
 .custom_setting_area_list ul li i{
 padding-right: 10px;

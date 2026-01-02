@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\GithubController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Dashboard\FlightBookingController;
 use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\ProfileController;
@@ -125,7 +126,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // User Dashboard Authentication Routes
 
-
+            Route::get('flight/bookings', [FlightBookingController::class, 'index'])->name('flight.bookings');
+            Route::get('flight/bookings/{id}', [FlightBookingController::class, 'show'])->name('flight.bookings.show');
+            Route::get('flight/bookings/{id}/edit', [FlightBookingController::class, 'edit'])->name('flight.bookings.edit');
+            Route::put('flight/bookings/{id}', [FlightBookingController::class, 'update'])->name('flight.bookings.update');
+            Route::delete('flight/bookings/{id}', [FlightBookingController::class, 'destroy'])->name('flight.bookings.destroy');
 
         });
     });

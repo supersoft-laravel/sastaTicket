@@ -18,7 +18,7 @@ class SettingSeeder extends Seeder
     public function run(): void
     {
         CompanySetting::create([
-            'company_name' => 'Admin Panel',
+            'company_name' => 'Sasta Ticket',
         ]);
 
         RecaptchaSetting::create([
@@ -27,8 +27,8 @@ class SettingSeeder extends Seeder
 
         SystemSetting::create([
             'max_upload_size' => '2048',
-            'currency_symbol' => '$',
-            'currency_symbol_position' => 'prefix',
+            'currency_symbol' => 'PKR',
+            'currency_symbol_position' => 'postfix',
             'footer_text' => 'All Copyrights Reserved',
         ]);
 
