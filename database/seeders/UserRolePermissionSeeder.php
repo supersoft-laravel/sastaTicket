@@ -52,6 +52,11 @@ class UserRolePermissionSeeder extends Seeder
         Permission::create(['name' => 'update settings']);
         Permission::create(['name' => 'delete settings']);
 
+        Permission::create(['name' => 'view contact']);
+        Permission::create(['name' => 'create contact']);
+        Permission::create(['name' => 'update contact']);
+        Permission::create(['name' => 'delete contact']);
+
 
         // Create Roles
         $superAdminRole = Role::create(['name' => 'super-admin']); //as super-admin
@@ -72,12 +77,12 @@ class UserRolePermissionSeeder extends Seeder
         // Create User and assign Role to it.
 
         $superAdminUser = User::firstOrCreate([
-                    'email' => 'superadmin@gmail.com',
+                    'email' => 'admin@gmail.com',
                 ], [
                     'name' => 'Super Admin',
-                    'email' => 'superadmin@gmail.com',
+                    'email' => 'admin@gmail.com',
                     'username' => 'superadmin',
-                    'password' => Hash::make ('superadmin@gmail.com'),
+                    'password' => Hash::make ('12345678'),
                     'email_verified_at' => now(),
                 ]);
 
@@ -88,25 +93,6 @@ class UserRolePermissionSeeder extends Seeder
         ], [
             'user_id' => $superAdminUser->id,
             'first_name' => $superAdminUser->name,
-        ]);
-
-        $adminUser = User::firstOrCreate([
-                            'email' => 'admin@gmail.com'
-                        ], [
-                            'name' => 'Admin',
-                            'username' => 'admin',
-                            'email' => 'admin@gmail.com',
-                            'password' => Hash::make ('admin@gmail.com'),
-                            'email_verified_at' => now(),
-                        ]);
-
-        $adminUser->assignRole($adminRole);
-
-        $adminUserProfile = $adminUser->profile()->firstOrCreate([
-            'user_id' => $adminUser->id,
-        ], [
-            'user_id' => $adminUser->id,
-            'first_name' => $adminUser->name,
         ]);
     }
 }
