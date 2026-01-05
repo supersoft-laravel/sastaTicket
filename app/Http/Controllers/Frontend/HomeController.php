@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use App\Models\FlightBooking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -246,6 +247,49 @@ class HomeController extends Controller
             Log::error('Frontend Flight Booking Confirmation Failed', ['error' => $th->getMessage()]);
             return redirect()->back()->with('error', "Something went wrong! Please try again later");
             throw $th;
+        }
+    }
+
+    public function contact()
+    {
+        try {
+            return view('frontend.pages.contact');
+        } catch (\Throwable $th) {
+            Log::error('Frontend Contact Page Failed', ['error' => $th->getMessage()]);
+            return redirect()->back()->with('error', "Something went wrong! Please try again later");
+            throw $th;
+        }
+    }
+
+    public function contactStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'nullable|string|max:255',
+            'phone' => 'required|string|max:255',
+            'message' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all())->with('error', 'Validation Error!');
+        }
+
+        try {
+            DB::beginTransaction();
+            $contact = new Contact();
+            $contact->name = $request->first_name . ' ' . $request->last_name;
+            $contact->email = $request->email;
+            $contact->phone = $request->phone;
+            $contact->message = $request->message;
+            $contact->save();
+            DB::commit();
+            return redirect()->back()->with('success', 'Your message submitted successfully');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+            Log::error('contact store Failed', ['error' => $th->getMessage()]);
+            return redirect()->back()->with('error', "Something went wrong! Please try again later");
         }
     }
 }

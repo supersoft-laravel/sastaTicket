@@ -100,7 +100,7 @@
                                                         aria-controls="oneway_flight" aria-selected="true">One
                                                         Way</button>
                                                 </li>
-                                                <li class="nav-item" role="presentation">
+                                                {{-- <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="roundtrip-tab" data-bs-toggle="tab"
                                                         data-bs-target="#roundtrip" type="button" role="tab"
                                                         aria-controls="roundtrip" aria-selected="false">Roundtrip</button>
@@ -110,7 +110,7 @@
                                                         data-bs-target="#multi_city" type="button" role="tab"
                                                         aria-controls="multi_city" aria-selected="false">Multi
                                                         city</button>
-                                                </li>
+                                                </li> --}}
                                             </ul>
                                         </div>
                                     </div>

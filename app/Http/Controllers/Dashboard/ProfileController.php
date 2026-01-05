@@ -34,7 +34,7 @@ class ProfileController extends Controller
             $maritalStatuses = MaritalStatus::where('is_active', 'active')->get();
             $languages = Language::where('is_active', 'active')->get();
             $designations = Designation::where('is_active', 'active')->get();
-            return view('dashboard.profile.index',compact('profile','countries','genders','maritalStatuses','languages','designations'));
+            return view('dashboard.profile.index',compact('profile', 'user', 'countries','genders','maritalStatuses','languages','designations'));
         } catch (\Throwable $th) {
             Log::error('Profile Index Failed', ['error' => $th->getMessage()]);
             return redirect()->back()->with('error', "Something went wrong! Please try again later");
@@ -81,24 +81,10 @@ class ProfileController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg|max_size',
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'nullable|string|max:255',
+            'full_name' => 'required|string|max:255',
+            'phone_number' => 'nullable|string',
             'dob' => 'nullable|date',
             'bio' => 'nullable|string|max:255',
-            'gender_id' => 'nullable|exists:genders,id',
-            'language_id' => 'nullable|exists:languages,id',
-            'designation_id' => 'nullable|exists:designations,id',
-            'marital_status_id' => 'nullable|exists:marital_statuses,id',
-            'country_id' => 'nullable|exists:countries,id',
-            'city' => 'nullable|string|max:255',
-            'zip' => 'nullable|string|max:255',
-            'street' => 'nullable|string|max:255',
-            'phone_number' => 'nullable|string',
-            'facebook_url' => 'nullable|string',
-            'linkedin_url' => 'nullable|string',
-            'skype_url' => 'nullable|string',
-            'instagram_url' => 'nullable|string',
-            'github_url' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -115,24 +101,10 @@ class ProfileController extends Controller
                 $profile->user_id = $currentUser->id;
             }
 
-            $profile->first_name = $request->first_name;
-            $profile->last_name = $request->last_name;
-            $profile->dob = $profile->dob ? date('Y-m-d', strtotime($profile->dob)) : null;
-            $profile->bio = $request->bio;
-            $profile->gender_id = $request->gender_id;
-            $profile->language_id = $request->language_id;
-            $profile->designation_id = $request->designation_id;
-            $profile->marital_status_id = $request->marital_status_id;
-            $profile->country_id = $request->country_id;
-            $profile->city = $request->city;
-            $profile->zip = $request->zip;
-            $profile->street = $request->street;
+            $profile->first_name = $request->full_name;
             $profile->phone_number = $request->phone_number;
-            $profile->facebook_url = $request->facebook_url;
-            $profile->linkedin_url = $request->linkedin_url;
-            $profile->skype_url = $request->skype_url;
-            $profile->instagram_url = $request->instagram_url;
-            $profile->github_url = $request->github_url;
+            $profile->dob = $request->dob ? date('Y-m-d', strtotime($request->dob)) : null;
+            $profile->bio = $request->bio;
 
             if ($request->hasFile('profile_image')) {
                 if (isset($profile->profile_image) && File::exists(public_path($profile->profile_image))) {
@@ -149,7 +121,7 @@ class ProfileController extends Controller
             }
 
             $user = User::where('id', $currentUser->id)->first();
-            $user->name = $request->first_name . ' ' . $request->last_name;
+            $user->name = $request->full_name;
             $user->save();
 
             $profile->save();
@@ -197,16 +169,8 @@ class ProfileController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'currentPassword' => 'required|string',
-            'newPassword' => [
-                'required',
-                'different:currentPassword',
-                Password::min(8)
-                    ->letters()
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-            ],
-            'confirmPassword' => 'required|same:newPassword',
+            'newPassword' => 'required|string|different:currentPassword|min:8',
+            'confirmNewPassword' => 'required|same:newPassword',
         ]);
 
         if ($validator->fails()) {

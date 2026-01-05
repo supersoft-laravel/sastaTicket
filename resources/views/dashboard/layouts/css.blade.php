@@ -8,3 +8,7 @@
 <!-- Stylesheets -->
 <link rel="stylesheet" href="{{ asset('assets/css/vendors.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+
+<!-- Toastr CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+

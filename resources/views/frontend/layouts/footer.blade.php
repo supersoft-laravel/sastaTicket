@@ -57,7 +57,7 @@
                         <li><a href="dashboard.html">Account</a></li>
                         <li><a href="faq.html">Faq</a></li>
                         <li><a href="testimonials.html">Legal</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="{{ route('frontend.contact') }}">Contact</a></li>
                         <li><a href="top-destinations.html"> Affiliate Program</a></li>
                         <li><a href="privacy-policy.html">Privacy Policy</a></li>
                     </ul>

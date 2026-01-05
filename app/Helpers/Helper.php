@@ -47,7 +47,7 @@ class Helper
     }
     public static function getLogoDark()
     {
-        return CompanySetting::first()->dark_logo ?? asset('frontAssets/img/logo-1.png');
+        return CompanySetting::first()->dark_logo ?? asset('frontAssets/img/logo-2.png');
     }
     public static function getFavicon()
     {

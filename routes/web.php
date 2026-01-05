@@ -98,12 +98,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead']);
         Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
         Route::post('/notifications/{id}/delete', [NotificationController::class, 'deleteNotification']);
-        Route::get('/notifications/send-test-noti/{id}', [NotificationController::class, 'testNotification']);
 
         Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
 
         // Admin Dashboard Authentication Routes
         Route::prefix('dashboard')->name('dashboard.')->group(function () {
+            Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+            Route::get('/notifications/delete/{id}', [NotificationController::class, 'deleteNotification'])->name('notifications.delete');
+            Route::get('/notifications/read/{id}', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 
             Route::resource('user', UserController::class);
             Route::resource('archived-user', ArchivedUserController::class);
@@ -144,6 +146,9 @@ Route::name('frontend.')->group(function () {
     Route::get('/flight-booking', [FrontendHomeController::class, 'flightBooking'])->name('flight.booking');
     Route::post('/flight-booking-submission', [FrontendHomeController::class, 'flightBookingSubmission'])->name('flight.booking.submission');
     Route::get('/flight-booking-confirmation/{bookingId}', [FrontendHomeController::class, 'flightBookingConfirmation'])->name('flight.booking.confirmation');
+
+    Route::get('/contact', [FrontendHomeController::class, 'contact'])->name('contact');
+    Route::post('/contact-store', [FrontendHomeController::class, 'contactStore'])->name('contact.store');
 });
 
 

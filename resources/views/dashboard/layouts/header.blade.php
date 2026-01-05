@@ -2,8 +2,8 @@
     <div data-anim="fade" class="header__container px-30 sm:px-20">
         <div class="-left-side">
             <a href="#!" class="header-logo" data-x="header-logo" data-x-toggle="is-logo-dark">
-                <img src="{{ asset('assets/img/general/logo.png') }}" alt="logo icon">
-                <img src="{{ asset('assets/img/general/logo.png') }}" alt="logo icon">
+                <img src="{{ App\Helpers\Helper::getLogoDark() }}" alt="logo icon">
+                <img src="{{ App\Helpers\Helper::getLogoDark() }}" alt="logo icon">
             </a>
         </div>
 
@@ -34,14 +34,44 @@
                         </div>
 
                         <div class="col-auto">
-                            <button class="button -blue-1-05 size-50 rounded-22 flex-center">
+                            <a href="{{ route('dashboard.notifications.index') }}"
+                                class="button -blue-1-05 size-50 rounded-22 flex-center" style="position: relative;">
+
+                                <i class="icon-notification text-20"></i>
+
+                                @if (Auth::user()->unreadNotifications->count() > 0)
+                                    <span
+                                        style="
+                                            position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 16px;
+                                            height: 16px;
+                                            border-radius: 50%;
+                                            background-color: #e3342f;
+                                            color: #ffffff;
+                                            font-size: 10px;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            line-height: 1;
+                                        ">
+                                        {{ Auth::user()->unreadNotifications->count() }}
+                                    </span>
+                                @endif
+
+                            </a>
+                        </div>
+
+                        {{-- <button class="button -blue-1-05 size-50 rounded-22 flex-center">
                                 <i class="icon-notification text-20"></i>
                             </button>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="pl-15">
-                        <img src="{{ asset('assets/img/avatars/3.png') }}" alt="image" class="size-50 rounded-22 object-cover">
+                        <img src="{{ asset(Auth::user()->profile->profile_image ?? 'assets/img/avatars/3.png') }}" alt="image"
+                            class="size-50 rounded-22 object-cover">
                     </div>
                 </div>
             </div>

@@ -61,7 +61,7 @@
             <div class="container">
                 <div class="main-responsive-menu">
                     <div class="logo">
-                        <a href="index.html">
+                        <a href="{{ route('frontend.home') }}">
                             <img style="height: 44px"
                                  src="{{ App\Helpers\Helper::getLogoLight() }}"
                                  alt="logo">
@@ -73,7 +73,7 @@
           <div class="main-navbar">
             <div class="container">
                 <nav class="navbar navbar-expand-md navbar-light">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="{{ route('frontend.home') }}">
                         <img style="height: 44px"
                              src="{{ App\Helpers\Helper::getLogoLight() }}"
                              alt="logo">
@@ -81,13 +81,13 @@
                     <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                         <ul class="navbar-nav">
                             <!--<li class="nav-item">-->
-                            <!--    <a href="index.html" class="nav-link active">-->
+                            <!--    <a href="{{ route('frontend.home') }}" class="nav-link active">-->
                             <!--        Home-->
                                     <!--                                    <i class="fas fa-angle-down"></i>-->
                             <!--    </a>-->
                                 <!--                                <ul class="dropdown-menu">-->
                                 <!--                                    <li class="nav-item">-->
-                                <!--                                        <a href="index.html" class="nav-link active">Home One</a>-->
+                                <!--                                        <a href="{{ route('frontend.home') }}" class="nav-link active">Home One</a>-->
                                 <!--                                    </li>-->
                                 <!--                                    <li class="nav-item">-->
                                 <!--                                        <a href="index-2.html" class="nav-link">Home Two</a>-->
@@ -374,7 +374,7 @@
                             <!--    <a href="about.html" class="nav-link">About Us</a>-->
                             <!--</li>-->
                             <li class="nav-item">
-                                <a href="contact.html" class="nav-link">Contact</a>
+                                <a href="{{route('frontend.contact')}}" class="nav-link">Contact</a>
                                 <!--                                <ul class="dropdown-menu">-->
                                 <!--                                    <li class="nav-item">-->
                                 <!--                                        <a href="contact.html" class="nav-link">Contact v1</a>-->
@@ -415,7 +415,7 @@
                                 <a href="#" class="search-box"><i class="fas fa-search"></i></a>
                             </div>
                             <div class="option-item">
-                                <a href="contact.html" class="btn  btn_navber">Get free quote</a>
+                                <a href="{{route('frontend.contact')}}" class="btn  btn_navber">Get free quote</a>
                             </div>
                         </div>
                     </div>

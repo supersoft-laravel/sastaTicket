@@ -60,13 +60,13 @@
                                     </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a href="hotel.html"> <button class="nav-link" id="hotels-tab" type="button"
+                                    <a href="#"> <button class="nav-link" id="hotels-tab" type="button"
                                             role="tab" aria-controls="hotels" aria-selected="false"><i
                                                 class="fas fa-hotel"></i>Hotels
                                         </button></a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a href="tour.html"><button class="nav-link" id="tours-tab" type="button"
+                                    <a href="#"><button class="nav-link" id="tours-tab" type="button"
                                             role="tab" aria-controls="tours" aria-selected="false"><i
                                                 class="fas fa-globe"></i>Tours
                                         </button></a>
@@ -76,20 +76,20 @@
 
 
                                 <li class="nav-item" role="presentation">
-                                    <a href="visa.html"><button class="nav-link" id="visa-tab" type="button"
+                                    <a href="#"><button class="nav-link" id="visa-tab" type="button"
                                             role="tab" aria-controls="visa" aria-selected="false"><i
                                                 class="fas fa-passport"></i> Visa
                                         </button></a>
                                 </li>
 
                                 <li class="nav-item" role="presentation">
-                                    <a href="pvt_transport.html"><button class="nav-link" id="bus-tab" type="button"
+                                    <a href="#"><button class="nav-link" id="bus-tab" type="button"
                                             role="tab" aria-controls="bus" aria-selected="false"><i
                                                 class="fas fa-bus"></i> Private Transport
                                         </button></a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a href="cruise.html"><button class="nav-link " id="cruise-tab" type="button"
+                                    <a href="#"><button class="nav-link " id="cruise-tab" type="button"
                                             role="tab" aria-controls="cruise" aria-selected="false"><i
                                                 class="fas fa-ship"></i> Cruise
                                         </button></a>
@@ -111,7 +111,7 @@
                                                         Way
                                                     </button>
                                                 </li>
-                                                <li class="nav-item" role="presentation">
+                                                {{-- <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="roundtrip-tab" data-bs-toggle="tab"
                                                         data-bs-target="#roundtrip" type="button" role="tab"
                                                         aria-controls="roundtrip" aria-selected="false">Roundtrip
@@ -123,7 +123,7 @@
                                                         aria-controls="multi_city" aria-selected="false">Multi
                                                         city
                                                     </button>
-                                                </li>
+                                                </li> --}}
                                             </ul>
                                         </div>
                                     </div>
@@ -1837,7 +1837,7 @@
                                 <h6><span>%</span> <span>Off</span></h6>
                             </div>
                             <h2>Holiday packages</h2>
-                            <!--<a href="top-destinations.html" class="btn btn_theme btn_md">Book now</a>-->
+                            <!--<a href="#" class="btn btn_theme btn_md">Book now</a>-->
                         </div>
                     </div>
                 </div>
@@ -1845,75 +1845,75 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                             <div class="destinations_content_box img_animation">
-                                <a href="top-destinations.html">
+                                <a href="#">
                                     <img src="{{ asset('frontAssets/img/home/china.png') }}" alt="img">
                                 </a>
                                 <div class="destinations_content_inner">
-                                    <h3><a href="top-destinations.html">China</a></h3>
+                                    <h3><a href="#">China</a></h3>
                                 </div>
                             </div>
                             <div class="destinations_content_box img_animation">
-                                <a href="top-destinations.html">
+                                <a href="#">
                                     <img src="{{ asset('frontAssets/img/home/darleejing.png') }}" alt="img">
                                 </a>
                                 <div class="destinations_content_inner">
-                                    <h3><a href="top-destinations.html">Darjeeling</a></h3>
+                                    <h3><a href="#">Darjeeling</a></h3>
                                 </div>
                             </div>
                             <div class="destinations_content_box img_animation">
-                                <a href="top-destinations.html">
+                                <a href="#">
                                     <img src="{{ asset('frontAssets/img/home/malaysia.png') }}" alt="img">
                                 </a>
                                 <div class="destinations_content_inner">
-                                    <h3><a href="top-destinations.html">Malaysia</a></h3>
+                                    <h3><a href="#">Malaysia</a></h3>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                             <div class="destinations_content_box img_animation">
-                                <a href="top-destinations.html">
+                                <a href="#">
                                     <img src="{{ asset('frontAssets/img/home/gangtok.png') }}" alt="img">
                                 </a>
                                 <div class="destinations_content_inner">
-                                    <h3><a href="top-destinations.html">Gangtok</a></h3>
+                                    <h3><a href="#">Gangtok</a></h3>
                                 </div>
                             </div>
                             <div class="destinations_content_box img_animation">
-                                <a href="top-destinations.html">
+                                <a href="#">
                                     <img src="{{ asset('frontAssets/img/home/thailand.png') }}" alt="img">
                                 </a>
                                 <div class="destinations_content_inner">
-                                    <h3><a href="top-destinations.html">Thailand</a></h3>
+                                    <h3><a href="#">Thailand</a></h3>
                                 </div>
                             </div>
                             <div class="destinations_content_box img_animation">
-                                <a href="top-destinations.html">
+                                <a href="#">
                                     <img src="{{ asset('frontAssets/img/home/australia.png') }}" alt="img">
                                 </a>
                                 <div class="destinations_content_inner">
-                                    <h3><a href="top-destinations.html">Australia</a></h3>
+                                    <h3><a href="#">Australia</a></h3>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                             <div class="destinations_content_box img_animation">
-                                <a href="top-destinations.html">
+                                <a href="#">
                                     <img src="{{ asset('frontAssets/img/home/london.png') }}" alt="img">
                                 </a>
                                 <div class="destinations_content_inner">
-                                    <h3><a href="top-destinations.html">London</a></h3>
+                                    <h3><a href="#">London</a></h3>
                                 </div>
                             </div>
                             <div class="destinations_content_box img_animation">
-                                <a href="top-destinations.html">
+                                <a href="#">
                                     <img src="{{ asset('frontAssets/img/home/usa.png') }}" alt="img">
                                 </a>
                                 <div class="destinations_content_inner">
-                                    <h3><a href="top-destinations.html">USA</a></h3>
+                                    <h3><a href="#">USA</a></h3>
                                 </div>
                             </div>
                             <!--<div class="destinations_content_box">-->
-                            <!--    <a href="top-destinations.html" class="btn btn_theme btn_md w-100">View all</a>-->
+                            <!--    <a href="#" class="btn btn_theme btn_md w-100">View all</a>-->
                             <!--</div>-->
                         </div>
                     </div>

@@ -7,39 +7,34 @@
             </a>
         </div>
     </div>
-    <div class="sidebar__item ">
-        <div class="accordion -db-sidebar js-accordion">
-            <div class="accordion__item {{ request()->routeIs('dashboard.flight.bookings') ? 'is-active' : '' }}">
-                <div class="accordion__button">
-                    <div class="sidebar__button col-12 d-flex items-center justify-between">
-                        <div class="d-flex items-center text-15 lh-1 fw-500">
-                            <i class="fas fa-plane mr-15"></i>
-                            Manage Flights
+    @canany(['view flight booking'])
+        <div class="sidebar__item ">
+            <div class="accordion -db-sidebar js-accordion">
+                <div class="accordion__item {{ request()->routeIs('dashboard.flight.bookings') ? 'is-active' : '' }}">
+                    <div class="accordion__button">
+                        <div class="sidebar__button col-12 d-flex items-center justify-between">
+                            <div class="d-flex items-center text-15 lh-1 fw-500">
+                                <i class="fas fa-plane mr-15"></i>
+                                Manage Flights
+                            </div>
+                            <div class="icon-chevron-sm-down text-7"></div>
                         </div>
-                        <div class="icon-chevron-sm-down text-7"></div>
                     </div>
-                </div>
 
-                <div class="accordion__content" {{ request()->routeIs('dashboard.flight.bookings') ? 'style=max-height:35px' : '' }}>
-                    <ul class="list-disc pb-5 pl-40">
-                        <li>
-                            <a href="{{ route('dashboard.flight.bookings') }}" class="text-15">Flight Bookings</a>
-                        </li>
-                    </ul>
+                    <div class="accordion__content"
+                        {{ request()->routeIs('dashboard.flight.bookings') ? 'style=max-height:35px' : '' }}>
+                        <ul class="list-disc pb-5 pl-40">
+                            <li>
+                                <a href="{{ route('dashboard.flight.bookings') }}" class="text-15">Flight Bookings</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {{-- <div class="sidebar__item">
-        <div class="sidebar__button">
-            <a href="db-booking.html" class="d-flex items-center text-15 lh-1 fw-500">
-                <i class="fas fa-cart-plus mr-15"></i>
-                Booking history
-            </a>
-        </div>
-    </div> --}}
+    @endcan
 
-    <div class="sidebar__item ">
+    {{-- <div class="sidebar__item ">
         <div class="accordion -db-sidebar js-accordion">
             <div class="accordion__item">
                 <div class="accordion__button">
@@ -131,39 +126,47 @@
                 Wishlist
             </a>
         </div>
-    </div>
+    </div> --}}
 
     <div class="sidebar__item">
-        <div class="sidebar__button ">
-            <a href="db-profile.html" class="d-flex items-center text-15 lh-1 fw-500">
+        <div class="sidebar__button {{ request()->routeIs('profile.index') ? '-is-active' : '' }}">
+            <a href="{{ route('profile.index') }}" class="d-flex items-center text-15 lh-1 fw-500">
                 <i class="fas fa-user-circle  mr-15"></i>
-                My profile
+                My Profile
             </a>
         </div>
     </div>
     <div class="sidebar__item">
-        <div class="sidebar__button ">
-            <a href="db-notification.html" class="d-flex items-center text-15 lh-1 fw-500">
-                <i class="fas fa-wallet mr-15"></i>
+        <div class="sidebar__button  {{ request()->routeIs('dashboard.notifications.index') ? '-is-active' : '' }}">
+            <a href="{{ route('dashboard.notifications.index') }}" class="d-flex items-center text-15 lh-1 fw-500">
+                <i class="fas fa-bell mr-15"></i>
                 Notification
             </a>
         </div>
     </div>
-    <div class="sidebar__item">
-        <div class="sidebar__button ">
-            <a href="db-settings.html" class="d-flex items-center text-15 lh-1 fw-500">
-                <i class="fas fa-cog mr-15"></i>
-                Settings
-            </a>
+
+    @can(['create complain'])
+        <div class="sidebar__item">
+            <div class="sidebar__button ">
+                <a href="{{ route('dashboard.settings') }}" class="d-flex items-center text-15 lh-1 fw-500">
+                    <i class="fas fa-cog mr-15"></i>
+                    Settings
+                </a>
+            </div>
         </div>
-    </div>
+    @endcan
 
     <div class="sidebar__item">
         <div class="sidebar__button ">
-            <a href="#" class="d-flex items-center text-15 lh-1 fw-500">
+            <a href="javascript:void(0);" class="d-flex items-center text-15 lh-1 fw-500"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fas fa-sign-out-alt mr-15"></i>
                 Logout
             </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
         </div>
     </div>
 </div>
