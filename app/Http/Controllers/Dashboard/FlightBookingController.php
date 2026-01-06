@@ -98,4 +98,22 @@ class FlightBookingController extends Controller
             throw $th;
         }
     }
+
+    public function updateStatus(Request $request, FlightBooking $booking)
+    {
+        $this->authorize('update flight booking');
+        $request->validate([
+            'status' => 'required|in:pending,confirmed,cancelled',
+        ]);
+
+        try {
+            $booking->status = $request->status;
+            $booking->save();
+
+            return redirect()->back()->with('success', 'Flight Booking status updated successfully.');
+        } catch (\Throwable $th) {
+            Log::error('Flight Booking Status Update Failed', ['error' => $th->getMessage()]);
+            return redirect()->back()->with('error', 'Something went wrong! Please try again later');
+        }
+    }
 }

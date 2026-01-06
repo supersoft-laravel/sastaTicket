@@ -134,6 +134,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('flight/bookings/{id}/edit', [FlightBookingController::class, 'edit'])->name('flight.bookings.edit');
             Route::put('flight/bookings/{id}', [FlightBookingController::class, 'update'])->name('flight.bookings.update');
             Route::delete('flight/bookings/{id}', [FlightBookingController::class, 'destroy'])->name('flight.bookings.destroy');
+            Route::put('flight-bookings/{booking}/status', [FlightBookingController::class, 'updateStatus'])->name('flight.bookings.status');
 
             //Contact Routes
             Route::get('contacts', [ContactController::class, 'index'])->name('contacts.index');
