@@ -35,4 +35,19 @@
     @if ($errors->any())
         toastr.error("{{ $errors->first() }}");
     @endif
+
+    $(document).on('click', '.delete_confirmation', function (event) {
+        event.preventDefault();
+
+        var form = $(this).closest("form");
+
+        var confirmDelete = confirm("Are you sure?\nYou would not be able to revert this!");
+
+        if (confirmDelete) {
+            form.submit();
+        } else {
+            alert("Your data is safe!");
+        }
+    });
+
 </script>

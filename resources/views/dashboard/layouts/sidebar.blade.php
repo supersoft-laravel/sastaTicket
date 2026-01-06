@@ -34,6 +34,17 @@
         </div>
     @endcan
 
+    @can('view contact')
+        <div class="sidebar__item">
+            <div class="sidebar__button {{ request()->routeIs('dashboard.contacts.*') ? '-is-active' : '' }}">
+                <a href="{{ route('dashboard.contacts.index') }}" class="d-flex items-center text-15 lh-1 fw-500">
+                    <i class="fas fa-envelope mr-15"></i>
+                    Contacts
+                </a>
+            </div>
+        </div>
+    @endcan
+
     {{-- <div class="sidebar__item ">
         <div class="accordion -db-sidebar js-accordion">
             <div class="accordion__item">

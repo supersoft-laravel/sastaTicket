@@ -93,10 +93,17 @@
                                             </a>
                                         @endcan
                                         @can('delete flight booking')
-                                            <a href="{{ route('dashboard.flight.bookings.destroy', $booking->id) }}"
-                                                onclick="return confirm('Are you sure?')">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
+                                            <form action="{{ route('dashboard.flight.bookings.destroy', $booking->id) }}"
+                                                method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <a href="#" type="submit"
+                                                    class="btn btn-icon btn-text-danger delete_confirmation"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="{{ __('Delete Booking') }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </form>
                                         @endcan
                                     </td>
                                 </tr>

@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\GithubController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Dashboard\ContactController;
 use App\Http\Controllers\Dashboard\FlightBookingController;
 use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\NotificationController;
@@ -133,6 +134,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('flight/bookings/{id}/edit', [FlightBookingController::class, 'edit'])->name('flight.bookings.edit');
             Route::put('flight/bookings/{id}', [FlightBookingController::class, 'update'])->name('flight.bookings.update');
             Route::delete('flight/bookings/{id}', [FlightBookingController::class, 'destroy'])->name('flight.bookings.destroy');
+
+            //Contact Routes
+            Route::get('contacts', [ContactController::class, 'index'])->name('contacts.index');
+            Route::get('contacts/{id}', [ContactController::class, 'show'])->name('contacts.show');
+            Route::delete('contacts/{id}', [ContactController::class, 'destroy'])->name('contacts.destroy');
 
         });
     });
