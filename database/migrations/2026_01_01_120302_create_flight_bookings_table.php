@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('flight_bookings', function (Blueprint $table) {
             $table->id();
             $table->string('booking_id')->unique()->nullable();
+            $table->string('booking_type')->default('oneway'); // oneway | roundtrip
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone');

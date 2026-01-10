@@ -188,6 +188,7 @@ class HomeController extends Controller
     {
         try {
             $search = $request->only([
+                'trip_type',
                 'from_iata',
                 'to_iata',
                 'departure_date',
@@ -222,6 +223,7 @@ class HomeController extends Controller
             'visa_no' => 'nullable|string|max:50',
 
             // Flight info
+            'trip_type' => 'required|in:oneway,roundtrip',
             'flight_price' => 'required|numeric',
             'flight_airline' => 'required|string|max:10',
             'flight_class' => 'required|string|max:50',
@@ -267,6 +269,7 @@ class HomeController extends Controller
         try {
             DB::beginTransaction();
             $booking = new FlightBooking();
+            $booking->booking_type = $request->trip_type;
             $booking->name = $request->name;
             $booking->email = $request->email;
             $booking->phone = $request->phone;

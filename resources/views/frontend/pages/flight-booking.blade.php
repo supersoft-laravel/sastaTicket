@@ -143,6 +143,7 @@
                             </div>
 
                             <!-- OUTBOUND FLIGHT DETAILS -->
+                            <input type="hidden" name="trip_type" value="{{ $search['trip_type'] ?? 'oneway' }}">
                             <input type="hidden" name="flight_price" value="{{ $base }}">
                             <input type="hidden" name="flight_airline" value="{{ $outFirst['carrierCode'] }}">
                             <input type="hidden" name="flight_class"

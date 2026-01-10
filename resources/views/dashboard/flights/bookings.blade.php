@@ -191,7 +191,7 @@
                             @forelse($flightBookings as $booking)
                                 <tr>
                                     <td>#{{ $booking->booking_id ?? $booking->id }}</td>
-                                    <td>Flight</td>
+                                    <td>{{ ucfirst($booking->booking_type) }}</td>
                                     <td>{{ $booking->created_at->format('d M Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($booking->departure_date)->format('d M Y') }}</td>
                                     <td>
