@@ -166,6 +166,24 @@
                                         <span>{{ $booking->flight_stops == 0 ? 'Non-stop' : $booking->flight_stops . ' Stop(s)' }}</span>
                                     </li>
                                 </ul>
+
+                                @if ($booking->return_date)
+                                    <hr>
+                                    <h4 class="mt-3 mb-3">Return Flight</h4>
+                                    <ul>
+                                        <li>Route: <span>{{ $booking->return_from }} → {{ $booking->return_to }}</span></li>
+                                        <li>Departure:
+                                            <span>{{ \Carbon\Carbon::parse($booking->return_departure_datetime)->format('d M Y, H:i') }}</span>
+                                        </li>
+                                        <li>Arrival:
+                                            <span>{{ \Carbon\Carbon::parse($booking->return_arrival_datetime)->format('d M Y, H:i') }}</span>
+                                        </li>
+                                        <li>Stops:
+                                            <span>{{ $booking->return_stops == 0 ? 'Non-stop' : $booking->return_stops . ' Stop(s)' }}</span>
+                                        </li>
+                                    </ul>
+
+                                @endif
                             </div>
                         </div>
 

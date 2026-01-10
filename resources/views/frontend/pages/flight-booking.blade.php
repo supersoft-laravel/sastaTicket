@@ -37,13 +37,22 @@
 @section('content')
 
     @php
-        $itinerary = $flight['itineraries'][0];
-        $segments = $itinerary['segments'];
-        $firstSegment = $segments[0];
-        $lastSegment = end($segments);
-        $stops = count($segments) - 1;
-        $duration = \App\Helpers\Helper::formatDurations($itinerary['duration']);
+        // Outbound
+        $outboundItinerary = $flight['itineraries'][0];
+        $outSegments = $outboundItinerary['segments'];
+        $outFirst = $outSegments[0];
+        $outLast = end($outSegments);
+        $outStops = count($outSegments) - 1;
+        $outDuration = \App\Helpers\Helper::formatDurations($outboundItinerary['duration']);
 
+        // Return (if roundtrip)
+        $returnItinerary = $flight['itineraries'][1] ?? null;
+        $returnSegments = $returnItinerary['segments'] ?? [];
+        $returnFirst = $returnSegments[0] ?? null;
+        $returnLast = end($returnSegments) ?: null;
+        $returnDuration = $returnItinerary ? \App\Helpers\Helper::formatDurations($returnItinerary['duration']) : null;
+
+        // Pricing
         $base = $flight['price']['grandTotal'];
         $discount = 0.0;
         $tax = 0.0;
@@ -133,23 +142,37 @@
                                 </div>
                             </div>
 
-                            <!-- HIDDEN FLIGHT DETAILS -->
-                            <input type="hidden" name="flight_price" value="{{ $flight['price']['grandTotal'] }}">
-                            <input type="hidden" name="flight_airline" value="{{ $firstSegment['carrierCode'] }}">
+                            <!-- OUTBOUND FLIGHT DETAILS -->
+                            <input type="hidden" name="flight_price" value="{{ $base }}">
+                            <input type="hidden" name="flight_airline" value="{{ $outFirst['carrierCode'] }}">
                             <input type="hidden" name="flight_class"
                                 value="{{ $flight['travelerPricings'][0]['fareDetailsBySegment'][0]['cabin'] }}">
-                            <input type="hidden" name="flight_from" value="{{ $firstSegment['departure']['iataCode'] }}">
-                            <input type="hidden" name="flight_to" value="{{ $lastSegment['arrival']['iataCode'] }}">
+                            <input type="hidden" name="flight_from" value="{{ $outFirst['departure']['iataCode'] }}">
+                            <input type="hidden" name="flight_to" value="{{ $outLast['arrival']['iataCode'] }}">
                             <input type="hidden" name="flight_departure_datetime"
-                                value="{{ $firstSegment['departure']['at'] }}">
-                            <input type="hidden" name="flight_arrival_datetime"
-                                value="{{ $lastSegment['arrival']['at'] }}">
-                            <input type="hidden" name="flight_stops" value="{{ $stops }}">
-                            <input type="hidden" name="flight_duration" value="{{ $itinerary['duration'] }}">
-                            <input type="hidden" name="flight_segments" value="@json($segments)">
+                                value="{{ $outFirst['departure']['at'] }}">
+                            <input type="hidden" name="flight_arrival_datetime" value="{{ $outLast['arrival']['at'] }}">
+                            <input type="hidden" name="flight_stops" value="{{ $outStops }}">
+                            <input type="hidden" name="flight_duration" value="{{ $outboundItinerary['duration'] }}">
+                            <input type="hidden" name="flight_segments" value="@json($outSegments)">
 
-                            <!-- Travel Date -->
+                            <!-- RETURN FLIGHT DETAILS (IF ROUNDTRIP) -->
+                            @if ($returnItinerary)
+                                <input type="hidden" name="return_from"
+                                    value="{{ $returnFirst['departure']['iataCode'] }}">
+                                <input type="hidden" name="return_to" value="{{ $returnLast['arrival']['iataCode'] }}">
+                                <input type="hidden" name="return_departure_datetime"
+                                    value="{{ $returnFirst['departure']['at'] }}">
+                                <input type="hidden" name="return_arrival_datetime"
+                                    value="{{ $returnLast['arrival']['at'] }}">
+                                <input type="hidden" name="return_stops" value="{{ count($returnSegments) - 1 }}">
+                                <input type="hidden" name="return_duration" value="{{ $returnItinerary['duration'] }}">
+                                <input type="hidden" name="return_segments" value="@json($returnSegments)">
+                            @endif
+
+                            <!-- Travel Dates -->
                             <input type="hidden" name="departure_date" value="{{ $search['departure_date'] ?? '' }}">
+                            <input type="hidden" name="return_date" value="{{ $search['return_date'] ?? '' }}">
 
                             <!-- Passengers -->
                             <input type="hidden" name="adults" value="{{ $search['adults'] ?? 1 }}">
@@ -159,10 +182,8 @@
                             <!-- Total Amount -->
                             <input type="hidden" name="total_amount" value="{{ $total }}">
 
-                            <!-- Tax Amount -->
+                            <!-- Tax & Discount -->
                             <input type="hidden" name="tax" value="{{ $tax }}">
-
-                            <!-- Coupon / Discount -->
                             <input type="hidden" name="discount_amount" value="{{ $discount }}">
 
                             <div class="booking_tour_form_submit">
@@ -189,36 +210,37 @@
                                     <h3>Flights</h3>
                                 </div>
 
+                                <!-- OUTBOUND FLIGHT -->
                                 <div class="flight_sidebar_right">
                                     <div class="flight_search_left_sidebar">
                                         <div class="flight_search_destination_sidebar">
                                             <p>From</p>
-                                            <h3>{{ $firstSegment['departure']['iataCode'] }}</h3>
-                                            <h6>{{ $firstSegment['departure']['terminal'] ?? '' }} -
-                                                {{ $firstSegment['departure']['iataCode'] }}</h6>
+                                            <h3>{{ $outFirst['departure']['iataCode'] }}</h3>
+                                            <h6>{{ $outFirst['departure']['terminal'] ?? '' }} -
+                                                {{ $outFirst['departure']['iataCode'] }}</h6>
                                         </div>
                                     </div>
                                     <div class="flight_search_middel_sidebar">
                                         <div class="flight_right_arrow_sidebar">
                                             <img src="{{ asset('frontAssets/img/icon/right_arrow.png') }}"
                                                 alt="icon">
-                                            <h6>{{ $stops == 0 ? 'Non-stop' : $stops . ' Stop(s)' }}</h6>
-                                            <p>{{ $duration }}</p>
+                                            <h6>{{ $outStops == 0 ? 'Non-stop' : $outStops . ' Stop(s)' }}</h6>
+                                            <p>{{ $outDuration }}</p>
                                         </div>
                                         <div class="flight_search_destination_sidebar">
                                             <p>To</p>
-                                            <h3>{{ $lastSegment['arrival']['iataCode'] }}</h3>
-                                            <h6>{{ $lastSegment['arrival']['terminal'] ?? '' }} -
-                                                {{ $lastSegment['arrival']['iataCode'] }}</h6>
+                                            <h3>{{ $outLast['arrival']['iataCode'] }}</h3>
+                                            <h6>{{ $outLast['arrival']['terminal'] ?? '' }} -
+                                                {{ $outLast['arrival']['iataCode'] }}</h6>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- OPTIONAL: Flight rules -->
+                                <!-- OPTIONAL: Outbound Flight Segments -->
                                 <div class="tour_package_details_bar_list">
                                     <h5>Flight segments</h5>
                                     <ul>
-                                        @foreach ($segments as $seg)
+                                        @foreach ($outSegments as $seg)
                                             <li>
                                                 {{ $seg['carrierCode'] }} {{ $seg['number'] }} -
                                                 {{ $seg['departure']['iataCode'] }} → {{ $seg['arrival']['iataCode'] }}
@@ -228,17 +250,63 @@
                                     </ul>
                                 </div>
 
-                                <div class="tour_package_details_bar_price">
+                                <!-- RETURN FLIGHT (IF ROUNDTRIP) -->
+                                @if ($returnItinerary)
+                                    <div class="flight_sidebar_right mt-3">
+                                        <div class="flight_search_left_sidebar">
+                                            <div class="flight_search_destination_sidebar">
+                                                <p>From</p>
+                                                <h3>{{ $returnFirst['departure']['iataCode'] }}</h3>
+                                                <h6>{{ $returnFirst['departure']['terminal'] ?? '' }} -
+                                                    {{ $returnFirst['departure']['iataCode'] }}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="flight_search_middel_sidebar">
+                                            <div class="flight_right_arrow_sidebar">
+                                                <img src="{{ asset('frontAssets/img/icon/right_arrow.png') }}"
+                                                    alt="icon">
+                                                <h6>{{ count($returnSegments) - 1 == 0 ? 'Non-stop' : count($returnSegments) - 1 . ' Stop(s)' }}
+                                                </h6>
+                                                <p>{{ $returnDuration }}</p>
+                                            </div>
+                                            <div class="flight_search_destination_sidebar">
+                                                <p>To</p>
+                                                <h3>{{ $returnLast['arrival']['iataCode'] }}</h3>
+                                                <h6>{{ $returnLast['arrival']['terminal'] ?? '' }} -
+                                                    {{ $returnLast['arrival']['iataCode'] }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Return Flight Segments -->
+                                    <div class="tour_package_details_bar_list">
+                                        <h5>Return Flight segments</h5>
+                                        <ul>
+                                            @foreach ($returnSegments as $seg)
+                                                <li>
+                                                    {{ $seg['carrierCode'] }} {{ $seg['number'] }} -
+                                                    {{ $seg['departure']['iataCode'] }} →
+                                                    {{ $seg['arrival']['iataCode'] }}
+                                                    ({{ \App\Helpers\Helper::formatDurations($seg['duration']) }})
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
+                                <!-- PRICE -->
+                                <div class="tour_package_details_bar_price mt-3">
                                     <h5>Price</h5>
                                     <div class="tour_package_bar_price">
                                         <h3>
-                                            {{ \App\Helpers\Helper::formatCurrency($flight['price']['grandTotal']) }}
+                                            {{ \App\Helpers\Helper::formatCurrency($total) }}
                                             <sub>/ Adult x {{ $search['adults'] ?? 1 }}</sub>
                                         </h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
 
                         <!-- TRAVEL DATE -->
                         <div class="tour_detail_right_sidebar">
@@ -255,6 +323,24 @@
                                 </div>
                             </div>
                         </div>
+
+                        @if ($search['return_date'])
+                            <!-- RETURN DATE -->
+                            <div class="tour_detail_right_sidebar">
+                                <div class="tour_details_right_boxed">
+                                    <div class="tour_details_right_box_heading">
+                                        <h3>Return date</h3>
+                                    </div>
+                                    <div class="edit_date_form">
+                                        <div class="form-group9">
+                                            <label for="return_dates">Edit Return Date</label>
+                                            <input type="date" value="{{ $search['return_date'] ?? '' }}"
+                                                class="form-control" id="return_dates">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
 
                         <!-- PASSENGERS -->
                         <div class="tour_detail_right_sidebar">
@@ -353,15 +439,15 @@
 @endsection
 
 @section('script')
-<script>
-    const dobInput = document.getElementById('dob');
+    <script>
+        const dobInput = document.getElementById('dob');
 
-    const today = new Date();
-    const maxDate = new Date();
-    maxDate.setFullYear(today.getFullYear() - 10); // today - 10 years
+        const today = new Date();
+        const maxDate = new Date();
+        maxDate.setFullYear(today.getFullYear() - 10); // today - 10 years
 
-    const formatDate = (date) => date.toISOString().split('T')[0];
+        const formatDate = (date) => date.toISOString().split('T')[0];
 
-    dobInput.max = formatDate(maxDate); // 10 saal se kam wali dates disabled
-</script>
+        dobInput.max = formatDate(maxDate); // 10 saal se kam wali dates disabled
+    </script>
 @endsection

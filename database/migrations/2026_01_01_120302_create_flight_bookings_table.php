@@ -40,6 +40,16 @@ return new class extends Migration
             $table->integer('children')->default(0);
             $table->integer('infants')->default(0);
 
+            //Return
+            $table->string('return_from');
+            $table->string('return_to');
+            $table->dateTime('return_departure_datetime');
+            $table->dateTime('return_arrival_datetime');
+            $table->integer('return_stops')->default(0);
+            $table->string('return_duration')->nullable();
+            $table->text('return_segments')->nullable();
+            $table->date('return_date')->nullable();
+
             // Pricing
             $table->decimal('flight_price', 10, 2);
             $table->decimal('tax', 10, 2)->default(0);

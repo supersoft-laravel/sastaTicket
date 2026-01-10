@@ -100,12 +100,12 @@
                                                         aria-controls="oneway_flight" aria-selected="true">One
                                                         Way</button>
                                                 </li>
-                                                {{-- <li class="nav-item" role="presentation">
+                                                <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="roundtrip-tab" data-bs-toggle="tab"
                                                         data-bs-target="#roundtrip" type="button" role="tab"
                                                         aria-controls="roundtrip" aria-selected="false">Roundtrip</button>
                                                 </li>
-                                                <li class="nav-item" role="presentation">
+                                                {{-- <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="multi_city-tab" data-bs-toggle="tab"
                                                         data-bs-target="#multi_city" type="button" role="tab"
                                                         aria-controls="multi_city" aria-selected="false">Multi
@@ -312,28 +312,41 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="oneway_search_form">
-                                                    <form action="#!">
+                                                    <form class="flight-form roundtrip-form"
+                                                        action="{{ route('frontend.flights') }}">
+                                                        <input type="hidden" name="trip_type" id="tripType"
+                                                            value="roundtrip">
                                                         <div class="row">
-                                                            <div class="col-lg-3  col-md-6 col-sm-12 col-12">
-                                                                <div class="flight_Search_boxed">
+                                                            <div class="col-lg-3 col-md-6 col-sm-12 col-12">
+                                                                <div class="flight_Search_boxed position-relative">
                                                                     <p>From</p>
-                                                                    <input type="text" value="New York">
-                                                                    <span>JFK - John F. Kennedy International...</span>
+                                                                    <input type="text" id="fromAirportRound"
+                                                                        placeholder="From" autocomplete="off">
+                                                                    <input type="text" hidden id="fromAirportCodeRound"
+                                                                        name="from_iata">
+                                                                    <span id="fromAirportSpanRound">Airport</span>
+                                                                    <ul id="fromSuggestionsRound"
+                                                                        class="airport-suggestions">
+                                                                    </ul>
                                                                     <div class="plan_icon_posation">
                                                                         <i class="fas fa-plane-departure"></i>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-3  col-md-6 col-sm-12 col-12">
-                                                                <div class="flight_Search_boxed">
+
+                                                            <div class="col-lg-3 col-md-6 col-sm-12 col-12">
+                                                                <div class="flight_Search_boxed position-relative">
                                                                     <p>To</p>
-                                                                    <input type="text" value="London ">
-                                                                    <span>LCY, London city airport </span>
+                                                                    <input type="text" id="toAirportRound"
+                                                                        placeholder="To" autocomplete="off">
+                                                                    <input type="text" hidden id="toAirportCodeRound"
+                                                                        name="to_iata">
+                                                                    <span id="toAirportSpanRound">Airport</span>
+                                                                    <ul id="toSuggestionsRound"
+                                                                        class="airport-suggestions">
+                                                                    </ul>
                                                                     <div class="plan_icon_posation">
                                                                         <i class="fas fa-plane-arrival"></i>
-                                                                    </div>
-                                                                    <div class="range_plan">
-                                                                        <i class="fas fa-exchange-alt"></i>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -342,12 +355,15 @@
                                                                     <div class="flight_Search_boxed date_flex_area">
                                                                         <div class="departure_date">
                                                                             <p>Journey date</p>
-                                                                            <input type="date" value="2022-05-05">
+                                                                            <input type="date" name="departure_date"
+                                                                                id="roundDeparture">
                                                                             <span>Thursday</span>
                                                                         </div>
+
                                                                         <div class="departure_date">
                                                                             <p>Return date</p>
-                                                                            <input type="date" value="2022-05-08">
+                                                                            <input type="date" name="return_date"
+                                                                                id="roundReturn">
                                                                             <span>Saturday</span>
                                                                         </div>
                                                                     </div>
@@ -359,20 +375,20 @@
                                                                     <div class="dropdown">
                                                                         <button class="dropdown-toggle final-count"
                                                                             data-toggle="dropdown" type="button"
-                                                                            id="dropdownMenuButton1"
+                                                                            id="dropdownMenuButton14"
                                                                             data-bs-toggle="dropdown"
                                                                             aria-expanded="false">
                                                                             0 Passenger
                                                                         </button>
-                                                                        <div class="dropdown-menu dropdown_passenger_info"
-                                                                            aria-labelledby="dropdownMenuButton1">
+                                                                        <div class="dropdown-menu dropdown_passenger_info dropdown_passenger_infoRound"
+                                                                            aria-labelledby="dropdownMenuButton14">
                                                                             <div class="traveller-calulate-persons">
                                                                                 <div class="passengers">
                                                                                     <h6>Passengers</h6>
                                                                                     <div class="passengers-types">
                                                                                         <div class="passengers-type">
                                                                                             <div class="text"><span
-                                                                                                    class="count pcount adultCountText">2</span>
+                                                                                                    class="count pcountRound">0</span>
                                                                                                 <div class="type-label">
                                                                                                     <p>Adult</p>
                                                                                                     <span>12+
@@ -381,12 +397,12 @@
                                                                                             </div>
                                                                                             <div class="button-set">
                                                                                                 <button type="button"
-                                                                                                    class="btn-add">
+                                                                                                    class="btn-addRound">
                                                                                                     <i
                                                                                                         class="fas fa-plus"></i>
                                                                                                 </button>
                                                                                                 <button type="button"
-                                                                                                    class="btn-subtract">
+                                                                                                    class="btn-subtractRound">
                                                                                                     <i
                                                                                                         class="fas fa-minus"></i>
                                                                                                 </button>
@@ -394,7 +410,7 @@
                                                                                         </div>
                                                                                         <div class="passengers-type">
                                                                                             <div class="text"><span
-                                                                                                    class="count ccount">0</span>
+                                                                                                    class="count ccountRound">0</span>
                                                                                                 <div class="type-label">
                                                                                                     <p
                                                                                                         class="fz14 mb-xs-0">
@@ -406,12 +422,12 @@
                                                                                             </div>
                                                                                             <div class="button-set">
                                                                                                 <button type="button"
-                                                                                                    class="btn-add-c">
+                                                                                                    class="btn-add-cRound">
                                                                                                     <i
                                                                                                         class="fas fa-plus"></i>
                                                                                                 </button>
                                                                                                 <button type="button"
-                                                                                                    class="btn-subtract-c">
+                                                                                                    class="btn-subtract-cRound">
                                                                                                     <i
                                                                                                         class="fas fa-minus"></i>
                                                                                                 </button>
@@ -419,7 +435,7 @@
                                                                                         </div>
                                                                                         <div class="passengers-type">
                                                                                             <div class="text"><span
-                                                                                                    class="count incount">0</span>
+                                                                                                    class="count incountRound">0</span>
                                                                                                 <div class="type-label">
                                                                                                     <p
                                                                                                         class="fz14 mb-xs-0">
@@ -431,12 +447,12 @@
                                                                                             </div>
                                                                                             <div class="button-set">
                                                                                                 <button type="button"
-                                                                                                    class="btn-add-in">
+                                                                                                    class="btn-add-inRound">
                                                                                                     <i
                                                                                                         class="fas fa-plus"></i>
                                                                                                 </button>
                                                                                                 <button type="button"
-                                                                                                    class="btn-subtract-in">
+                                                                                                    class="btn-subtract-inRound">
                                                                                                     <i
                                                                                                         class="fas fa-minus"></i>
                                                                                                 </button>
@@ -477,12 +493,21 @@
                                                         <div class="top_form_search_button">
                                                             <button class="btn btn_theme btn_md">Search</button>
                                                         </div>
+
+                                                        <input type="hidden" name="adults" id="adultCountRound"
+                                                            value="0">
+                                                        <input type="hidden" name="children" id="childCountRound"
+                                                            value="0">
+                                                        <input type="hidden" name="infants" id="infantCountRound"
+                                                            value="0">
+                                                        <input type="hidden" name="cabin_class" id="cabinClassRound"
+                                                            value="Business">
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="multi_city" role="tabpanel"
+                                    {{-- <div class="tab-pane fade" id="multi_city" role="tabpanel"
                                         aria-labelledby="multi_city-tab">
                                         <div class="row">
                                             <div class="col-lg-12">
@@ -884,7 +909,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -895,9 +920,8 @@
     </section>
 
     <!-- Flight Search Areas -->
-    <section id="explore_area" class="section_padding">
+    {{-- <section id="explore_area" class="section_padding">
         <div class="container">
-            <!-- Section Heading -->
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="section_heading_center">
@@ -909,7 +933,6 @@
                 <div class="col-lg-3">
                     <div class="left_side_search_area">
 
-                        <!-- PRICE -->
                         <div class="left_side_search_boxed">
                             <div class="left_side_search_heading">
                                 <h5>Filter by price</h5>
@@ -918,7 +941,6 @@
                             <p class="mt-2" id="priceLabel"></p>
                         </div>
 
-                        <!-- STOPS -->
                         <div class="left_side_search_boxed">
                             <div class="left_side_search_heading">
                                 <h5>Number of stops</h5>
@@ -926,7 +948,6 @@
                             <div id="stopsFilter"></div>
                         </div>
 
-                        <!-- CLASS -->
                         <div class="left_side_search_boxed">
                             <div class="left_side_search_heading">
                                 <h5>Flight class</h5>
@@ -934,7 +955,6 @@
                             <div id="classFilter"></div>
                         </div>
 
-                        <!-- AIRLINES -->
                         <div class="left_side_search_boxed">
                             <div class="left_side_search_heading">
                                 <h5>Airlines</h5>
@@ -942,7 +962,6 @@
                             <div id="airlineFilter"></div>
                         </div>
 
-                        <!-- RESET -->
                         <div class="left_side_search_boxed text-center">
                             <button class="btn btn_theme btn_sm" id="resetFilters">
                                 Reset Filters
@@ -974,7 +993,6 @@
                                         <div class="flight_search_item_wrappper">
                                             <div class="flight_search_items">
 
-                                                <!-- LEFT -->
                                                 <div class="flight_multis_area_wrapper">
                                                     <div class="flight_search_left">
                                                         <div class="flight_logo">
@@ -990,7 +1008,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- MIDDLE -->
                                                     <div class="flight_search_middel">
                                                         <div class="flight_right_arrow">
                                                             <img src="{{ asset('frontAssets/img/icon/right_arrow.png') }}"
@@ -1009,14 +1026,12 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- RIGHT -->
                                                 <div class="flight_search_right">
                                                     <h2>
                                                         {{ \App\Helpers\Helper::formatCurrency($flight['price']['grandTotal']) }}
                                                     </h2>
 
                                                     <form action="{{ route('frontend.flight.booking') }}" method="GET">
-                                                        {{-- SEARCH QUERY --}}
                                                         <input type="hidden" name="trip_type" value="{{ request('trip_type') }}">
                                                         <input type="hidden" name="from_iata" value="{{ request('from_iata') }}">
                                                         <input type="hidden" name="to_iata" value="{{ request('to_iata') }}">
@@ -1026,7 +1041,6 @@
                                                         <input type="hidden" name="infants" value="{{ request('infants') }}">
                                                         <input type="hidden" name="cabin_class" value="{{ request('cabin_class') }}">
 
-                                                        {{-- SELECTED FLIGHT --}}
                                                         <input type="hidden" name="flight"
                                                             value="{{ base64_encode(json_encode($flight)) }}">
                                                         <button class="btn btn_theme btn_sm">
@@ -1042,7 +1056,6 @@
 
                                             </div>
 
-                                            <!-- EXPANDED DETAILS -->
                                             <div class="flight_policy_refund collapse" id="flight{{ $index }}">
                                                 @foreach ($segments as $segment)
                                                     <div class="flight_show_down_wrapper">
@@ -1107,15 +1120,287 @@
                                 @endforeach
 
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> --}}
+
+    <section id="explore_area" class="section_padding">
+        <div class="container">
+            <!-- Section Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section_heading_center">
+                        <h2>{{ count($flights) }} tours found</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- LEFT FILTERS -->
+                <div class="col-lg-3">
+                    <div class="left_side_search_area">
+                        <!-- PRICE -->
+                        <div class="left_side_search_boxed">
+                            <div class="left_side_search_heading">
+                                <h5>Filter by price</h5>
+                            </div>
+                            <input type="range" id="priceRange" class="w-100">
+                            <p class="mt-2" id="priceLabel"></p>
+                        </div>
+                        <!-- STOPS -->
+                        <div class="left_side_search_boxed">
+                            <div class="left_side_search_heading">
+                                <h5>Number of stops</h5>
+                            </div>
+                            <div id="stopsFilter"></div>
+                        </div>
+                        <!-- CLASS -->
+                        <div class="left_side_search_boxed">
+                            <div class="left_side_search_heading">
+                                <h5>Flight class</h5>
+                            </div>
+                            <div id="classFilter"></div>
+                        </div>
+                        <!-- AIRLINES -->
+                        <div class="left_side_search_boxed">
+                            <div class="left_side_search_heading">
+                                <h5>Airlines</h5>
+                            </div>
+                            <div id="airlineFilter"></div>
+                        </div>
+                        <!-- RESET -->
+                        <div class="left_side_search_boxed text-center">
+                            <button class="btn btn_theme btn_sm" id="resetFilters">Reset Filters</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FLIGHT RESULTS -->
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="flight_search_result_wrapper">
+                                @foreach ($flights as $index => $flight)
+                                    @php
+                                        $isRoundTrip = request('trip_type') === 'roundtrip';
+                                        $itineraries = $flight['itineraries'];
+
+                                        // Outbound
+                                        $outbound = $itineraries[0];
+                                        $outSegments = $outbound['segments'];
+                                        $outFirst = $outSegments[0];
+                                        $outLast = end($outSegments);
+                                        $outStops = count($outSegments) - 1;
+
+                                        // Return
+                                        $return = $isRoundTrip && isset($itineraries[1]) ? $itineraries[1] : null;
+                                        $returnSegments = $return['segments'] ?? [];
+                                    @endphp
+
+                                    <div class="flight-item flight_search_result_wrapper"
+                                        data-price="{{ $flight['price']['grandTotal'] }}" data-stops="{{ $outStops }}"
+                                        data-airline="{{ $outFirst['carrierCode'] }}"
+                                        data-class="{{ $flight['travelerPricings'][0]['fareDetailsBySegment'][0]['cabin'] }}">
+
+                                        <div class="flight_search_item_wrappper">
+                                            <div class="flight_search_items">
+                                                <!-- LEFT -->
+                                                <div class="flight_multis_area_wrapper">
+                                                    <div class="flight_search_left">
+                                                        <div class="flight_logo">
+                                                            <img src="https://content.airhex.com/content/logos/airlines_{{ strtolower($outFirst['carrierCode']) }}_100_100_s.png"
+                                                                alt="airline">
+                                                        </div>
+                                                        <div class="flight_search_destination">
+                                                            <p>From</p>
+                                                            <h3>{{ $outFirst['departure']['iataCode'] }}</h3>
+                                                            <h6>{{ \App\Helpers\Helper::formatTime($outFirst['departure']['at']) }}
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- MIDDLE -->
+                                                    <div class="flight_search_middel">
+                                                        <div class="flight_right_arrow">
+                                                            <img src="{{ asset('frontAssets/img/icon/right_arrow.png') }}"
+                                                                alt="icon">
+                                                            <h6>{{ $outStops == 0 ? 'Non-stop' : $outStops . ' Stop(s)' }}
+                                                            </h6>
+                                                            <p>{{ \App\Helpers\Helper::formatDurations($outbound['duration']) }}
+                                                            </p>
+                                                        </div>
+                                                        <div class="flight_search_destination">
+                                                            <p>To</p>
+                                                            <h3>{{ $outLast['arrival']['iataCode'] }}</h3>
+                                                            <h6>{{ \App\Helpers\Helper::formatTime($outLast['arrival']['at']) }}
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- RIGHT -->
+                                                <div class="flight_search_right">
+                                                    <h2>{{ \App\Helpers\Helper::formatCurrency($flight['price']['grandTotal']) }}
+                                                    </h2>
+
+                                                    <form action="{{ route('frontend.flight.booking') }}" method="GET">
+                                                        <input type="hidden" name="trip_type"
+                                                            value="{{ request('trip_type') }}">
+                                                        <input type="hidden" name="from_iata"
+                                                            value="{{ request('from_iata') }}">
+                                                        <input type="hidden" name="to_iata"
+                                                            value="{{ request('to_iata') }}">
+                                                        <input type="hidden" name="departure_date"
+                                                            value="{{ request('departure_date') }}">
+                                                        @if ($isRoundTrip)
+                                                            <input type="hidden" name="return_date"
+                                                                value="{{ request('return_date') }}">
+                                                        @endif
+                                                        <input type="hidden" name="adults"
+                                                            value="{{ request('adults') }}">
+                                                        <input type="hidden" name="children"
+                                                            value="{{ request('children') }}">
+                                                        <input type="hidden" name="infants"
+                                                            value="{{ request('infants') }}">
+                                                        <input type="hidden" name="cabin_class"
+                                                            value="{{ request('cabin_class') }}">
+                                                        <input type="hidden" name="flight"
+                                                            value="{{ base64_encode(json_encode($flight)) }}">
+                                                        <button class="btn btn_theme btn_sm">Book now</button>
+                                                    </form>
+
+                                                    <h6 data-bs-toggle="collapse"
+                                                        data-bs-target="#flight{{ $index }}">
+                                                        Show more <i class="fas fa-chevron-down"></i>
+                                                    </h6>
+                                                </div>
+                                            </div>
+
+                                            <!-- EXPANDED DETAILS -->
+                                            <div class="flight_policy_refund collapse" id="flight{{ $index }}">
+                                                <!-- OUTBOUND -->
+                                                <h5 class="mb-2">Outbound Flight</h5>
+                                                @foreach ($outSegments as $segment)
+                                                    <div class="flight_show_down_wrapper">
+                                                        <div class="flight-shoe_dow_item">
+                                                            <div class="airline-details">
+                                                                <div class="img">
+                                                                    <img
+                                                                        src="https://content.airhex.com/content/logos/airlines_{{ strtolower($segment['carrierCode']) }}_100_100_s.png">
+                                                                </div>
+                                                                <span
+                                                                    class="airlineName fw-500">{{ $segment['carrierCode'] }}
+                                                                    {{ $segment['number'] }}</span>
+                                                                <span class="flightNumber">Aircraft:
+                                                                    {{ $segment['aircraft']['code'] ?? 'N/A' }}</span>
+                                                            </div>
+                                                            <div class="flight_inner_show_component">
+                                                                <div class="flight_det_wrapper">
+                                                                    <div class="flight_det">
+                                                                        <div class="code_time">
+                                                                            <span
+                                                                                class="code">{{ $segment['departure']['iataCode'] }}</span>
+                                                                            <span
+                                                                                class="time">{{ \App\Helpers\Helper::formatTime($segment['departure']['at']) }}</span>
+                                                                        </div>
+                                                                        <p class="date">
+                                                                            {{ \App\Helpers\Helper::formatDate($segment['departure']['at']) }}
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flight_duration">
+                                                                    <div class="arrow_right"></div>
+                                                                    <span>{{ \App\Helpers\Helper::formatDurations($segment['duration']) }}</span>
+                                                                </div>
+                                                                <div class="flight_det_wrapper">
+                                                                    <div class="flight_det">
+                                                                        <div class="code_time">
+                                                                            <span
+                                                                                class="code">{{ $segment['arrival']['iataCode'] }}</span>
+                                                                            <span
+                                                                                class="time">{{ \App\Helpers\Helper::formatTime($segment['arrival']['at']) }}</span>
+                                                                        </div>
+                                                                        <p class="date">
+                                                                            {{ \App\Helpers\Helper::formatDate($segment['arrival']['at']) }}
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+
+                                                <!-- RETURN (if roundtrip) -->
+                                                @if ($return)
+                                                    <hr>
+                                                    <h5 class="mb-2">Return Flight</h5>
+                                                    @foreach ($returnSegments as $segment)
+                                                        <div class="flight_show_down_wrapper">
+                                                            <div class="flight-shoe_dow_item">
+                                                                <div class="airline-details">
+                                                                    <div class="img">
+                                                                        <img
+                                                                            src="https://content.airhex.com/content/logos/airlines_{{ strtolower($segment['carrierCode']) }}_100_100_s.png">
+                                                                    </div>
+                                                                    <span
+                                                                        class="airlineName fw-500">{{ $segment['carrierCode'] }}
+                                                                        {{ $segment['number'] }}</span>
+                                                                    <span class="flightNumber">Aircraft:
+                                                                        {{ $segment['aircraft']['code'] ?? 'N/A' }}</span>
+                                                                </div>
+                                                                <div class="flight_inner_show_component">
+                                                                    <div class="flight_det_wrapper">
+                                                                        <div class="flight_det">
+                                                                            <div class="code_time">
+                                                                                <span
+                                                                                    class="code">{{ $segment['departure']['iataCode'] }}</span>
+                                                                                <span
+                                                                                    class="time">{{ \App\Helpers\Helper::formatTime($segment['departure']['at']) }}</span>
+                                                                            </div>
+                                                                            <p class="date">
+                                                                                {{ \App\Helpers\Helper::formatDate($segment['departure']['at']) }}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="flight_duration">
+                                                                        <div class="arrow_right"></div>
+                                                                        <span>{{ \App\Helpers\Helper::formatDurations($segment['duration']) }}</span>
+                                                                    </div>
+                                                                    <div class="flight_det_wrapper">
+                                                                        <div class="flight_det">
+                                                                            <div class="code_time">
+                                                                                <span
+                                                                                    class="code">{{ $segment['arrival']['iataCode'] }}</span>
+                                                                                <span
+                                                                                    class="time">{{ \App\Helpers\Helper::formatTime($segment['arrival']['at']) }}</span>
+                                                                            </div>
+                                                                            <p class="date">
+                                                                                {{ \App\Helpers\Helper::formatDate($segment['arrival']['at']) }}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                             {{-- <div class="load_more_flight">
-                                <button class="btn btn_md"><i class="fas fa-spinner"></i> Load more..</button>
-                            </div> --}}
+                            <button class="btn btn_md"><i class="fas fa-spinner"></i> Load more..</button>
+                        </div> --}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
 @endsection
 
 @section('script')
@@ -1242,9 +1527,7 @@
 
 
     <script>
-        /* =====================================================
-                                AIRPORT AUTOCOMPLETE
-                                ===================================================== */
+        //AIRPORT AUTOCOMPLETE
         async function searchAirports(query, suggestionBox, inputField, spanField, codeField) {
             if (query.length < 2) {
                 suggestionBox.innerHTML = '';
@@ -1301,12 +1584,6 @@
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
             /* =====================
-               AUTOCOMPLETE INIT
-            ====================== */
-            setupAutocomplete('fromAirport', 'fromAirportCode', 'fromSuggestions', 'fromAirportSpan');
-            setupAutocomplete('toAirport', 'toAirportCode', 'toSuggestions', 'toAirportSpan');
-
-            /* =====================
                TRIP TYPE
             ====================== */
             const tripInput = document.getElementById('tripType');
@@ -1320,39 +1597,67 @@
             document.getElementById('flights').classList.add('show', 'active');
 
             if (tripType === 'roundtrip') {
+                // ROUNDTRIP
+                setupAutocomplete('fromAirportRound', 'fromAirportCodeRound', 'fromSuggestionsRound',
+                    'fromAirportSpanRound');
+                setupAutocomplete('toAirportRound', 'toAirportCodeRound', 'toSuggestionsRound',
+                    'toAirportSpanRound');
+
                 document.getElementById('roundtrip-tab').classList.add('active');
                 document.getElementById('roundtrip').classList.add('show', 'active');
-            } else if (tripType === 'multicity') {
-                document.getElementById('multi_city-tab').classList.add('active');
-                document.getElementById('multi_city').classList.add('show', 'active');
-            } else {
+            }
+            // else if (tripType === 'multicity') {
+            //     document.getElementById('multi_city-tab').classList.add('active');
+            //     document.getElementById('multi_city').classList.add('show', 'active');
+            // }
+            else {
                 console.log('Setting Oneway Active');
                 document.getElementById('oneway-tab').classList.add('active');
                 document.getElementById('oneway_flight').classList.add('show', 'active');
+                // ONEWAY
+                setupAutocomplete('fromAirport', 'fromAirportCode', 'fromSuggestions', 'fromAirportSpan');
+                setupAutocomplete('toAirport', 'toAirportCode', 'toSuggestions', 'toAirportSpan');
             }
 
             document.getElementById('oneway-tab').onclick = () => tripInput.value = 'oneway';
             document.getElementById('roundtrip-tab').onclick = () => tripInput.value = 'roundtrip';
-            document.getElementById('multi_city-tab').onclick = () => tripInput.value = 'multicity';
+            // document.getElementById('multi_city-tab').onclick = () => tripInput.value = 'multicity';
 
             /* =====================
-               PASSENGERS
-            ====================== */
+            PASSENGERS (Dynamic by Trip Type)
+            ===================== */
+
             let adult = parseInt(params.get('adults')) || 0;
             let child = parseInt(params.get('children')) || 0;
             let infant = parseInt(params.get('infants')) || 0;
 
-            const adultSpan = document.getElementById('adultCountText');
-            const childSpan = document.querySelector('.ccount');
-            const infantSpan = document.querySelector('.incount');
-            const finalBtn = document.querySelector('.final-count');
+            let adultSpan, childSpan, infantSpan, finalBtn;
+            let adultInput, childInput, infantInput;
 
-            const adultInput = document.getElementById('adultCount');
-            const childInput = document.getElementById('childCount');
-            const infantInput = document.getElementById('infantCount');
+            if (tripType === 'roundtrip') {
+
+                adultSpan = document.querySelector('.pcountRound');
+                childSpan = document.querySelector('.ccountRound');
+                infantSpan = document.querySelector('.incountRound');
+                finalBtn = document.querySelector('#roundtrip .final-count');
+
+                adultInput = document.getElementById('adultCountRound');
+                childInput = document.getElementById('childCountRound');
+                infantInput = document.getElementById('infantCountRound');
+
+            } else {
+
+                adultSpan = document.getElementById('adultCountText');
+                childSpan = document.querySelector('.ccount');
+                infantSpan = document.querySelector('.incount');
+                finalBtn = document.querySelector('#oneway_flight .final-count');
+
+                adultInput = document.getElementById('adultCount');
+                childInput = document.getElementById('childCount');
+                infantInput = document.getElementById('infantCount');
+            }
 
             function updatePassengers() {
-                console.log('Updating Passengers:', adult, child, infant);
                 adultSpan.innerText = adult;
                 childSpan.innerText = child;
                 infantSpan.innerText = infant;
@@ -1366,77 +1671,146 @@
 
             updatePassengers();
 
-            document.querySelector('.btn-add').onclick = () => {
+            /* ===== Buttons Binding ===== */
+            const btnMap = (tripType === 'roundtrip') ? {
+                addAdult: '.btn-addRound',
+                subAdult: '.btn-subtractRound',
+                addChild: '.btn-add-cRound',
+                subChild: '.btn-subtract-cRound',
+                addInf: '.btn-add-inRound',
+                subInf: '.btn-subtract-inRound'
+            } : {
+                addAdult: '.btn-add',
+                subAdult: '.btn-subtract',
+                addChild: '.btn-add-c',
+                subChild: '.btn-subtract-c',
+                addInf: '.btn-add-in',
+                subInf: '.btn-subtract-in'
+            };
+
+            document.querySelector(btnMap.addAdult).onclick = () => {
                 adult++;
                 updatePassengers();
             };
-            document.querySelector('.btn-subtract').onclick = () => {
+            document.querySelector(btnMap.subAdult).onclick = () => {
                 if (adult > 0) adult--;
                 updatePassengers();
             };
-            document.querySelector('.btn-add-c').onclick = () => {
+
+            document.querySelector(btnMap.addChild).onclick = () => {
                 child++;
                 updatePassengers();
             };
-            document.querySelector('.btn-subtract-c').onclick = () => {
+            document.querySelector(btnMap.subChild).onclick = () => {
                 if (child > 0) child--;
                 updatePassengers();
             };
-            document.querySelector('.btn-add-in').onclick = () => {
+
+            document.querySelector(btnMap.addInf).onclick = () => {
                 infant++;
                 updatePassengers();
             };
-            document.querySelector('.btn-subtract-in').onclick = () => {
+            document.querySelector(btnMap.subInf).onclick = () => {
                 if (infant > 0) infant--;
                 updatePassengers();
             };
 
-            /* =====================
-               CABIN CLASS
-            ====================== */
-            const cabin = params.get('cabin_class') || 'Business';
-            document.getElementById('cabinClass').value = cabin;
-            // document.querySelector('.dropdown_passenger_area').innerText = cabin;
 
-            const cabinText = document.getElementById('cabinText');
+            /* =====================
+            CABIN CLASS (Dynamic)
+            ===================== */
+
+            const cabin = params.get('cabin_class') || 'Business';
+
+            let cabinInput, cabinText;
+
+            if (tripType === 'roundtrip') {
+                cabinInput = document.getElementById('cabinClassRound');
+                cabinText = document.querySelector('#roundtrip span');
+            } else {
+                cabinInput = document.getElementById('cabinClass');
+                cabinText = document.getElementById('cabinText');
+            }
+
+            cabinInput.value = cabin;
             cabinText.innerText = cabin;
 
-            document.querySelectorAll('.label-select-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.innerText.trim() === cabin);
-                btn.onclick = function() {
-                    document.querySelectorAll('.label-select-btn').forEach(b => b.classList.remove(
-                        'active'));
-                    this.classList.add('active');
-                    document.getElementById('cabinClass').value = this.innerText.trim();
-                    document.querySelector('.dropdown_passenger_area span').innerText = this.innerText
-                        .trim();
-                };
-            });
+            document.querySelectorAll(
+                    `#${tripType === 'roundtrip' ? 'roundtrip' : 'oneway_flight'} .label-select-btn`)
+                .forEach(btn => {
+                    btn.classList.toggle('active', btn.innerText.trim() === cabin);
+
+                    btn.onclick = function() {
+                        document.querySelectorAll('.label-select-btn').forEach(b => b.classList.remove(
+                            'active'));
+                        this.classList.add('active');
+
+                        cabinInput.value = this.innerText.trim();
+                        cabinText.innerText = this.innerText.trim();
+                    };
+                });
 
             /* =====================
-               DATE
-            ====================== */
-            const dateInput = document.querySelector('.departure_date input[type="date"]');
-            const daySpan = document.querySelector('.departure_date span');
+            DATE (Dynamic)
+            ===================== */
 
-            const journeyDate = params.get('departure_date') || new Date().toISOString().split('T')[0];
-            dateInput.value = journeyDate;
-            daySpan.innerText = days[new Date(journeyDate).getDay()];
+            if (tripType === 'roundtrip') {
 
-            dateInput.onchange = () => {
-                daySpan.innerText = days[new Date(dateInput.value).getDay()];
-            };
+                const depInput = document.getElementById('roundDeparture');
+                const retInput = document.getElementById('roundReturn');
+
+                depInput.value = params.get('departure_date') || new Date().toISOString().split('T')[0];
+                retInput.value = params.get('return_date') || '';
+
+            } else {
+
+                const dateInput = document.querySelector('#oneway_flight .departure_date input[type="date"]');
+                const daySpan = document.querySelector('#oneway_flight .departure_date span');
+
+                const journeyDate = params.get('departure_date') || new Date().toISOString().split('T')[0];
+                dateInput.value = journeyDate;
+                daySpan.innerText = days[new Date(journeyDate).getDay()];
+
+                dateInput.onchange = () => {
+                    daySpan.innerText = days[new Date(dateInput.value).getDay()];
+                };
+            }
 
             /* =====================
                AIRPORTS FROM URL
             ====================== */
             /* ========= FROM AIRPORT ========= */
+            let fromInput, fromSpan, fromCode;
+            let toInput, toSpan, toCode;
+
+            if (tripType === 'roundtrip') {
+                // ROUNDTRIP FIELDS
+                fromInput = document.getElementById('fromAirportRound');
+                fromSpan = document.getElementById('fromAirportSpanRound');
+                fromCode = document.getElementById('fromAirportCodeRound');
+
+                toInput = document.getElementById('toAirportRound');
+                toSpan = document.getElementById('toAirportSpanRound');
+                toCode = document.getElementById('toAirportCodeRound');
+
+            } else {
+                // ONEWAY FIELDS
+                fromInput = document.getElementById('fromAirport');
+                fromSpan = document.getElementById('fromAirportSpan');
+                fromCode = document.getElementById('fromAirportCode');
+
+                toInput = document.getElementById('toAirport');
+                toSpan = document.getElementById('toAirportSpan');
+                toCode = document.getElementById('toAirportCode');
+            }
+
+            /* ========= FROM AIRPORT ========= */
             if (params.get('from_iata')) {
                 applyAirportByIATA(
                     params.get('from_iata'),
-                    document.getElementById('fromAirport'),
-                    document.getElementById('fromAirportSpan'),
-                    document.getElementById('fromAirportCode')
+                    fromInput,
+                    fromSpan,
+                    fromCode
                 );
             }
 
@@ -1444,9 +1818,9 @@
             if (params.get('to_iata')) {
                 applyAirportByIATA(
                     params.get('to_iata'),
-                    document.getElementById('toAirport'),
-                    document.getElementById('toAirportSpan'),
-                    document.getElementById('toAirportCode')
+                    toInput,
+                    toSpan,
+                    toCode
                 );
             }
 

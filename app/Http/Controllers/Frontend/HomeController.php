@@ -63,17 +63,70 @@ class HomeController extends Controller
     }
 
 
+    // public function flights(Request $request)
+    // {
+    //     try {
+    //         $token = $this->amadeusToken();
+
+    //         $from = strtoupper(trim($request->from_iata));
+    //         $to = strtoupper(trim($request->to_iata));
+
+    //         $adults = max(1, (int) $request->adults);
+    //         $children = (int) ($request->children ?? 0);
+    //         $infants = min((int) ($request->infants ?? 0), $adults);
+
+    //         $travelClass = $request->cabin_class
+    //             ? strtoupper(str_replace(' ', '_', $request->cabin_class))
+    //             : 'ECONOMY';
+
+    //         if ($request->cabin_class == 'First Class') {
+    //             $travelClass = 'FIRST';
+    //         }
+
+    //         $response = Http::withToken($token)->get(
+    //             'https://test.api.amadeus.com/v2/shopping/flight-offers',
+    //             [
+    //                 'originLocationCode' => $from,
+    //                 'destinationLocationCode' => $to,
+    //                 'departureDate' => date('Y-m-d', strtotime($request->departure_date)),
+    //                 'adults' => $adults,
+    //                 'children' => $children,
+    //                 'infants' => $infants,
+    //                 'travelClass' => $travelClass,
+    //                 'currencyCode' => 'PKR',
+    //                 'max' => 30
+    //             ]
+    //         );
+
+    //         if (!$response->successful()) {
+    //             Log::error('Amadeus Flights Error', $response->json());
+    //             dd($response->json());
+    //         }
+
+    //         $flights = $response->json('data');
+
+    //         // dd($flights);
+
+    //         return view('frontend.pages.flights', compact('flights'));
+    //     } catch (\Throwable $th) {
+    //         Log::error($th->getMessage());
+    //         return back()->with('error', 'Flights not found');
+    //     }
+    // }
+
     public function flights(Request $request)
     {
         try {
             $token = $this->amadeusToken();
 
-            $from = strtoupper(trim($request->from_iata));
-            $to = strtoupper(trim($request->to_iata));
+            $tripType = $request->trip_type ?? 'oneway';
 
-            $adults = max(1, (int) $request->adults);
+            $from = strtoupper(trim($request->from_iata));
+            $to   = strtoupper(trim($request->to_iata));
+
+            $adults   = max(1, (int) $request->adults);
             $children = (int) ($request->children ?? 0);
-            $infants = min((int) ($request->infants ?? 0), $adults);
+            $infants  = min((int) ($request->infants ?? 0), $adults);
 
             $travelClass = $request->cabin_class
                 ? strtoupper(str_replace(' ', '_', $request->cabin_class))
@@ -83,36 +136,53 @@ class HomeController extends Controller
                 $travelClass = 'FIRST';
             }
 
+            /* ============================
+            BASE PARAMS
+            ============================ */
+            $params = [
+                'originLocationCode'      => $from,
+                'destinationLocationCode' => $to,
+                'departureDate'           => date('Y-m-d', strtotime($request->departure_date)),
+                'adults'                  => $adults,
+                'children'                => $children,
+                'infants'                 => $infants,
+                'travelClass'             => $travelClass,
+                'currencyCode'            => 'PKR',
+                'max'                     => 30,
+            ];
+
+            /* ============================
+            ROUNDTRIP CONDITION
+            ============================ */
+            if ($tripType === 'roundtrip' && $request->filled('return_date')) {
+                $params['returnDate'] = date('Y-m-d', strtotime($request->return_date));
+            }
+
+            /* ============================
+            API CALL
+            ============================ */
             $response = Http::withToken($token)->get(
                 'https://test.api.amadeus.com/v2/shopping/flight-offers',
-                [
-                    'originLocationCode' => $from,
-                    'destinationLocationCode' => $to,
-                    'departureDate' => date('Y-m-d', strtotime($request->departure_date)),
-                    'adults' => $adults,
-                    'children' => $children,
-                    'infants' => $infants,
-                    'travelClass' => $travelClass,
-                    'currencyCode' => 'PKR',
-                    'max' => 30
-                ]
+                $params
             );
 
             if (!$response->successful()) {
                 Log::error('Amadeus Flights Error', $response->json());
-                dd($response->json());
+                return back()->with('error', 'Amadeus API error');
             }
 
             $flights = $response->json('data');
 
             // dd($flights);
 
-            return view('frontend.pages.flights', compact('flights'));
+            return view('frontend.pages.flights', compact('flights', 'tripType'));
+
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
             return back()->with('error', 'Flights not found');
         }
     }
+
 
     public function flightBooking(Request $request)
     {
@@ -121,6 +191,7 @@ class HomeController extends Controller
                 'from_iata',
                 'to_iata',
                 'departure_date',
+                'return_date',
                 'adults',
                 'children',
                 'infants',
@@ -128,6 +199,7 @@ class HomeController extends Controller
             ]);
 
             $flight = json_decode(base64_decode($request->flight), true);
+
             return view('frontend.pages.flight-booking', compact('search', 'flight'));
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
@@ -157,6 +229,7 @@ class HomeController extends Controller
             'flight_to' => 'required|string|max:10',
             'flight_departure_datetime' => 'required|date',
             'flight_arrival_datetime' => 'required|date',
+            'flight_return_datetime' => 'nullable|date',
             'flight_stops' => 'required|integer|min:0',
             'flight_duration' => 'required|string|max:20',
             'flight_segments' => 'nullable|string',
@@ -172,6 +245,16 @@ class HomeController extends Controller
             'total_amount' => 'required|numeric|min:0',
             'tax' => 'nullable|numeric|min:0',
             'discount_amount' => 'nullable|numeric|min:0',
+
+            //Return Flight info
+            'return_from' => 'nullable|string|max:10',
+            'return_to' => 'nullable|string|max:10',
+            'return_departure_datetime' => 'nullable|date',
+            'return_arrival_datetime' => 'nullable|date',
+            'return_stops' => 'nullable|integer|min:0',
+            'return_duration' => 'nullable|string|max:20',
+            'return_segments' => 'nullable|string',
+            'return_date' => 'nullable|date',
         ]);
 
         if ($validator->fails()) {
@@ -210,6 +293,14 @@ class HomeController extends Controller
             $booking->total_amount = $request->total_amount;
             $booking->tax = $request->tax;
             $booking->discount_amount = $request->discount_amount;
+            $booking->return_from = $request->return_from;
+            $booking->return_to = $request->return_to;
+            $booking->return_departure_datetime = $request->return_departure_datetime;
+            $booking->return_arrival_datetime = $request->return_arrival_datetime;
+            $booking->return_stops = $request->return_stops;
+            $booking->return_duration = $request->return_duration;
+            $booking->return_segments = $request->return_segments;
+            $booking->return_date = $request->return_date;
             $booking->save();
 
             $airline = strtoupper($request->flight_airline);
